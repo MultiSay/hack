@@ -1,0 +1,6 @@
+/build/*
+.env
+cmd/.DS_Store
+.DS_Store
+/dist/*
+.vscode/
