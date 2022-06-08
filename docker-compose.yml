@@ -10,9 +10,9 @@ services:
     volumes:
       - data:/var/lib/postgresql/data
   server:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    container_name: hackapp
+    image: {{ env.IMAGE_URL }}
+    restart: always
     env_file: .env
     depends_on:
       - database
