@@ -10,7 +10,7 @@ services:
     volumes:
       - data:/var/lib/postgresql/data
   server:
-    container_name: hackapp
+    container_name: server
     image: {{ env.IMAGE_URL }}
     restart: always
     env_file: .env
