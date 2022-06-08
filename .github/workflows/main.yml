@@ -55,7 +55,6 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          folder-id: fd8ct4cvmbgc508jblc5
           vm-name: yc-action-demo
           vm-service-account-id: ajel87fbsabjo7j2hsb0
           vm-cores: 2
