@@ -64,4 +64,4 @@ jobs:
           vm-zone-id: ru-central1-c
           vm-subnet-id: b0clh1hr9g3ufo3than8
           user-data-path: './user-data.yaml'
-          docker-compose-path: './docker-compose.yaml'
+          docker-compose-path: './docker-compose.yml'
