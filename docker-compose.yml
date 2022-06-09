@@ -3,8 +3,10 @@ services:
   database:
     image: postgres
     restart: always
-    env_file:
-      - .env_db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=hack
     ports:
       - "5432:5432"
     volumes:
@@ -13,7 +15,6 @@ services:
     container_name: server
     image: {{ env.IMAGE_URL }}
     restart: always
-    env_file: .env
     depends_on:
       - database
     networks:
