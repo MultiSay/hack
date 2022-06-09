@@ -9,7 +9,7 @@ import (
 
 type Config struct {
 	Host            string `envconfig:"APP_HOST" default:"localhost"`
-	Port            int    `envconfig:"APP_PORT" default:"8080"`
+	Port            int    `envconfig:"APP_PORT" default:"80"`
 	URL             string `envconfig:"DATABASE_URL" default:"postgresql://user:password@database:5432/hack?sslmode=disable"`
 	MaxOpenConns    int    `envconfig:"MAX_OPEN_CONNS" default:"25"`
 	MaxIdleConns    int    `envconfig:"MAX_IDLE_CONNS" default:"2"`

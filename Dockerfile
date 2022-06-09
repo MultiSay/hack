@@ -11,5 +11,4 @@ FROM alpine:latest
 
 WORKDIR /app
 COPY --from=build /go/src/hack/dist/hackapp /usr/bin/hackapp
-EXPOSE 8080 8080
 ENTRYPOINT ["/usr/bin/hackapp"]
