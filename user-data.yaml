@@ -4,4 +4,5 @@ users:
     groups: sudo
     shell: /bin/bash
     sudo: [ 'ALL=(ALL) NOPASSWD:ALL' ]
-    ssh-authorized-keys: '{{ env.SSH_KEY }}'
+    ssh-authorized-keys: | 
+      {{ env.SSH_KEY }}
