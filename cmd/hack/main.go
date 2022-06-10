@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	v1 "hack/api/v1"
 	"hack/internal/app/config"
 	"hack/internal/app/server"
 	"hack/internal/app/store/sqlstore"
@@ -22,7 +23,8 @@ func main() {
 		panic(err)
 	}
 
-	srv := server.NewServer(store, config)
+	api := v1.New(store, config)
+	srv := server.NewServer(store, config, api)
 	if err := srv.Start(fmt.Sprintf("%s:%d", config.Host, config.Port)); err != nil && err != http.ErrServerClosed {
 		panic(err)
 	}

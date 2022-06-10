@@ -1,6 +1,7 @@
 package server
 
 import (
+	"hack/api"
 	"hack/internal/app/config"
 	"hack/internal/app/store"
 
@@ -15,14 +16,16 @@ type server struct {
 	router *echo.Echo
 	store  store.Store
 	config config.Config
+	api    api.Api
 }
 
 // NewServer инициализируем сервер
-func NewServer(store store.Store, config config.Config) *server {
+func NewServer(store store.Store, config config.Config, api api.Api) *server {
 	s := &server{
 		router: echo.New(),
 		store:  store,
 		config: config,
+		api:    api,
 	}
 
 	// Конфигурируем роутинг
