@@ -48,10 +48,11 @@ func New(config config.Config) (*Store, error) {
 
 func initMigrations(databaseDSN string) error {
 	m, err := migrate.New(
-		"file://migrations",
+		"file://internal/app/store/migrations",
 		databaseDSN)
 	if err != nil {
 		if err == os.ErrNotExist {
+			log.Printf("[INIT] Migrations no exist")
 			return nil
 		}
 		return err
