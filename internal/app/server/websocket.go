@@ -80,6 +80,7 @@ func (c *Client) Read() {
 		}
 
 		log.Printf("client_name: %s, mt: %d, message: %s", c.name, mt, message)
+		c.WriteMessage("pong!")
 	}
 }
 

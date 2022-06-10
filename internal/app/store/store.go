@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"hack/internal/app/config"
-	"log"
 	"os"
 	"time"
 
@@ -34,9 +33,6 @@ func New(config config.Config) (*Store, error) {
 	db.SetMaxIdleConns(config.MaxIdleConns)
 	db.SetConnMaxLifetime(time.Minute * time.Duration(config.ConnMaxLifetime))
 
-	log.Printf("[INIT] Start migrations")
-	err = initMigrations(config.URL)
-	log.Printf("[INIT] End migrations")
 	if err != nil && err != migrate.ErrNoChange && !errors.Is(err, os.ErrNotExist) {
 		return nil, fmt.Errorf("unable to create database '%s'", err)
 	}
@@ -44,24 +40,4 @@ func New(config config.Config) (*Store, error) {
 	return &Store{
 		db: db,
 	}, nil
-}
-
-func initMigrations(databaseDSN string) error {
-	m, err := migrate.New(
-		"file://internal/app/store/migrations",
-		databaseDSN)
-	if err != nil {
-		if err == os.ErrNotExist {
-			log.Printf("[INIT] Migrations no exist")
-			return nil
-		}
-		log.Printf("[INIT] Migrations err: %s", err)
-		return err
-	}
-	if err := m.Up(); err != nil {
-		log.Printf("[INIT] Migrations err: %s", err)
-		return err
-	}
-	log.Printf("[INIT] Migrations UP")
-	return nil
 }
