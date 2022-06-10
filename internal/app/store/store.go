@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"hack/internal/app/config"
+	"log"
 	"os"
 	"time"
 
@@ -56,5 +57,6 @@ func initMigrations(databaseDSN string) error {
 	if err := m.Up(); err != nil {
 		return err
 	}
+	log.Printf("[INIT] Migrations UP")
 	return nil
 }
