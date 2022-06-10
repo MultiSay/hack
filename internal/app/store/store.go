@@ -34,7 +34,9 @@ func New(config config.Config) (*Store, error) {
 	db.SetMaxIdleConns(config.MaxIdleConns)
 	db.SetConnMaxLifetime(time.Minute * time.Duration(config.ConnMaxLifetime))
 
+	log.Printf("[INIT] Start migrations")
 	err = initMigrations(config.URL)
+	log.Printf("[INIT] End migrations")
 	if err != nil && err != migrate.ErrNoChange && !errors.Is(err, os.ErrNotExist) {
 		return nil, fmt.Errorf("unable to create database '%s'", err)
 	}
