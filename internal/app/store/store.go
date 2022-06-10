@@ -55,9 +55,11 @@ func initMigrations(databaseDSN string) error {
 			log.Printf("[INIT] Migrations no exist")
 			return nil
 		}
+		log.Printf("[INIT] Migrations err: %s", err)
 		return err
 	}
 	if err := m.Up(); err != nil {
+		log.Printf("[INIT] Migrations err: %s", err)
 		return err
 	}
 	log.Printf("[INIT] Migrations UP")
