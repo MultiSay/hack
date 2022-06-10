@@ -11,5 +11,5 @@ FROM alpine:latest
 
 WORKDIR /app
 COPY --from=build /go/src/hack/dist/hackapp /usr/bin/hackapp
-COPY --from=build /go/src/hack/internal/. /internal/.
+COPY --from=build /go/src/hack/internal/. /app/internal/.
 ENTRYPOINT ["/usr/bin/hackapp"]
