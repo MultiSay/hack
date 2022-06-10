@@ -19,6 +19,6 @@ migrate-create:
 
 .PHONY: swagger
 swagger: 
-	go get github.com/swaggo/swag && ~/bin/swag init -g cmd/hack/main.go --exclude dist/
+	go get github.com/swaggo/swag && ~/go/bin/swag init -g cmd/hack/main.go --exclude dist/
 
 .DEFAULT_GOAL := run
