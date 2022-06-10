@@ -2,10 +2,15 @@ package store
 
 import (
 	"database/sql"
+	"errors"
+	"fmt"
 	"hack/internal/app/config"
+	"os"
 	"time"
 
-	_ "github.com/lib/pq"
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
 type Store struct {
@@ -28,11 +33,28 @@ func New(config config.Config) (*Store, error) {
 	db.SetMaxIdleConns(config.MaxIdleConns)
 	db.SetConnMaxLifetime(time.Minute * time.Duration(config.ConnMaxLifetime))
 
-	if err != nil {
-		return nil, err
+	err = initMigrations(config.URL)
+	if err != nil && err != migrate.ErrNoChange && !errors.Is(err, os.ErrNotExist) {
+		return nil, fmt.Errorf("unable to create database '%s'", err)
 	}
 
 	return &Store{
 		db: db,
 	}, nil
+}
+
+func initMigrations(databaseDSN string) error {
+	m, err := migrate.New(
+		"file://migrations",
+		databaseDSN)
+	if err != nil {
+		if err == os.ErrNotExist {
+			return nil
+		}
+		return err
+	}
+	if err := m.Up(); err != nil {
+		return err
+	}
+	return nil
 }

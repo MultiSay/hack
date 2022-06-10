@@ -37,7 +37,12 @@ func (s *server) Start(address string) error {
 
 // configureRouter Объявляем список доступных роутов
 func (s *server) configureRouter() {
-	s.router.Use(middleware.CORS())
+	s.router.Use(
+		middleware.CORS(),
+		middleware.RequestID(),
+		middleware.Recover(),
+		middleware.Logger(),
+	)
 	s.router.GET("/readyz", s.handleReadyz)
 	s.router.GET("/statusz", s.handleHealthz)
 	s.router.GET("/swagger/*", echoSwagger.WrapHandler)

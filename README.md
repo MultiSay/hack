@@ -12,8 +12,6 @@ Moscow City Hack 2022
 2. Install dependencies
     ```bash
     $ go mod download
-    $ migrate -path migrations -database "postgresql://user:password@database:5432/hack?sslmode=disable" up
-    $ cp .env.example .env
     ```
 
 ## Run app local
