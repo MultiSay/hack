@@ -13,12 +13,12 @@ import (
 
 type server struct {
 	router *echo.Echo
-	store  *store.Store
+	store  store.Store
 	config config.Config
 }
 
 // NewServer инициализируем сервер
-func NewServer(store *store.Store, config config.Config) *server {
+func NewServer(store store.Store, config config.Config) *server {
 	s := &server{
 		router: echo.New(),
 		store:  store,

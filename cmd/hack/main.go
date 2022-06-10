@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"hack/internal/app/config"
 	"hack/internal/app/server"
-	"hack/internal/app/store"
+	"hack/internal/app/store/sqlstore"
 	"net/http"
 )
 
@@ -17,7 +17,7 @@ import (
 func main() {
 	config := config.Get()
 	//подключение к бд
-	store, err := store.New(config)
+	store, err := sqlstore.New(config)
 	if err != nil {
 		panic(err)
 	}
