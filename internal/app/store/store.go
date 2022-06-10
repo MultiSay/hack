@@ -21,11 +21,11 @@ func New(config config.Config) (*Store, error) {
 
 	db, err := sql.Open("postgres", config.URL)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("unable to parse DATABASE_URL '%s'", err)
 	}
 
 	if err := db.Ping(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("unable to create connection pool '%s'", err)
 	}
 
 	// Устанавливаем параметры

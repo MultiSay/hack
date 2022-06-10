@@ -40,7 +40,6 @@ func (s *server) configureRouter() {
 	s.router.Use(
 		middleware.CORS(),
 		middleware.RequestID(),
-		middleware.Recover(),
 		middleware.Logger(),
 	)
 	s.router.GET("/readyz", s.handleReadyz)
