@@ -5,6 +5,7 @@ import (
 	"hack/internal/app/config"
 	"hack/internal/app/store"
 	"hack/internal/app/websocket"
+	"net/http"
 
 	_ "hack/docs"
 
@@ -41,10 +42,24 @@ func (s *server) Start(address string) error {
 	return s.router.Start(address)
 }
 
+func setResponseACAOHeaderFromRequest(req http.Request, resp echo.Response) {
+	resp.Header().Set(echo.HeaderAccessControlAllowOrigin,
+		req.Header.Get(echo.HeaderOrigin))
+}
+
+func ACAOHeaderOverwriteMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(ctx echo.Context) error {
+		ctx.Response().Before(func() {
+			setResponseACAOHeaderFromRequest(*ctx.Request(), *ctx.Response())
+		})
+		return next(ctx)
+	}
+}
+
 // configureRouter Объявляем список доступных роутов
 func (s *server) configureRouter() {
 	s.router.Use(
-		middleware.CORS(),
+		ACAOHeaderOverwriteMiddleware,
 		middleware.RequestID(),
 		middleware.Logger(),
 	)
