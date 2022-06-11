@@ -13,6 +13,12 @@ type RegionPredict struct {
 	PredictArpu        int    `json:"predictArpu"`
 }
 
+type PredictResult struct {
+	Status  string          `json:"status"`
+	Message string          `json:"message"`
+	Data    []RegionPredict `json:"data"`
+}
+
 func (u *RegionPredict) Validate() error {
 	validate := validator.New()
 	err := validate.Struct(u)

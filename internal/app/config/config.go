@@ -16,6 +16,7 @@ type Config struct {
 	ConnMaxLifetime int    `envconfig:"CONN_MAX_LIFETIME" default:"1"`
 	DeliveryMaxTime int    `envconfig:"DELIVERY_MAX_TIME" default:"30"`
 	SigningKey      string `envconfig:"SIGNING_KEY" default:"some_secret_key"`
+	NumOfWorkers    int    `envconfig:"NUM_OF_WORKERS" default:"2"`
 }
 
 var (

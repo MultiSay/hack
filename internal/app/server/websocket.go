@@ -1,119 +1,12 @@
 package server
 
 import (
+	"hack/internal/app/websocket"
 	"log"
-	"sync"
 	"text/template"
 
-	"github.com/google/uuid"
-	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
-	"go.uber.org/atomic"
 )
-
-var (
-	upgrader = websocket.Upgrader{}
-	counter  atomic.Int32
-	clients  = sync.Map{}
-)
-
-type Client struct {
-	conn      *websocket.Conn
-	writeChan chan message
-	name      string
-	clients   *sync.Map
-	counter   *atomic.Int32
-	once      sync.Once
-}
-
-type message struct {
-	data string
-	code int
-}
-
-func NewClient(conn *websocket.Conn, counter *atomic.Int32, clients *sync.Map) *Client {
-	client := &Client{
-		conn:      conn,
-		writeChan: make(chan message, 1),
-		name:      uuid.New().String(),
-		clients:   clients,
-		counter:   counter,
-		once:      sync.Once{},
-	}
-
-	conn.SetPingHandler(func(appData string) error {
-		client.writeMessage("pong", websocket.PongMessage)
-		return nil
-	})
-
-	counter.Inc()
-
-	log.Printf("client_name: %s, counter: %d", client.name, client.counter.Load())
-	return client
-}
-
-func (c *Client) close() error {
-	c.counter.Dec()
-
-	log.Printf("client_name: %s, counter: %d", c.name, c.counter.Load())
-	c.conn.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
-	c.clients.Delete(c.name)
-	close(c.writeChan)
-	return c.conn.Close()
-}
-
-func (c *Client) Close() (err error) {
-	c.once.Do(func() {
-		err = c.close()
-	})
-
-	return
-}
-
-func (c *Client) Read() {
-	defer c.Close()
-	for {
-		mt, message, err := c.conn.ReadMessage()
-		if err != nil {
-			log.Printf("client_name: %s, err: %s", c.name, err.Error())
-			return
-		}
-
-		log.Printf("client_name: %s, mt: %d, message: %s", c.name, mt, message)
-		c.WriteMessage("pong!")
-	}
-}
-
-func (c *Client) writeMessage(data string, code int) {
-	c.writeChan <- message{data, code}
-}
-
-func (c *Client) WriteMessage(data string) {
-	c.writeChan <- message{data, websocket.TextMessage}
-}
-
-func (c *Client) Write() {
-	for msg := range c.writeChan {
-		err := c.conn.WriteMessage(msg.code, []byte(msg.data))
-		if err != nil {
-			log.Printf("write err: %s", err.Error())
-			c.Close()
-			return
-		}
-	}
-}
-
-func (c *Client) Name() string {
-	return c.name
-}
-
-func stopClients() {
-	clients.Range(func(key, value interface{}) bool {
-		log.Printf("stop client key: %s", key)
-		value.(*Client).Close()
-		return true
-	})
-}
 
 // handleWS Обрабатываем WebSocket
 // handleWS godoc
@@ -125,15 +18,15 @@ func stopClients() {
 // @Failure 500 {object} model.ResponseError
 // @Router /ws/ [get]
 func (s *server) handleWS(ctx echo.Context) error {
-	c, err := upgrader.Upgrade(ctx.Response(), ctx.Request(), nil)
+	c, err := s.ws.Upgrader.Upgrade(ctx.Response(), ctx.Request(), nil)
 	if err != nil {
 		// upgrade error
 		log.Printf("write err: %s", err.Error())
 		return err
 	}
 
-	client := NewClient(c, &counter, &clients)
-	clients.Store(client.Name(), client)
+	client := websocket.NewClient(c, s.ws)
+	s.ws.Clients.Store(client.Name(), client)
 	go client.Read()
 	go client.Write()
 

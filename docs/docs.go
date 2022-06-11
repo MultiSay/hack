@@ -24,7 +24,37 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/file/": {
+        "/v1/file": {
+            "get": {
+                "description": "Если файл есть в расчете то получим его состояние",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Получить состояние текущего файла с датасетом",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.File"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Получаем файл с фронта с новым датасетом для расчета",
                 "consumes": [
@@ -151,7 +181,10 @@ var doc = `{
                     "type": "string"
                 },
                 "size": {
-                    "type": "number"
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
                 }
             }
         },

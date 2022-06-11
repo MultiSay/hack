@@ -13,7 +13,9 @@ definitions:
       sendAt:
         type: string
       size:
-        type: number
+        type: integer
+      status:
+        type: string
     required:
     - name
     type: object
@@ -47,7 +49,27 @@ info:
   title: hack API
   version: "1.0"
 paths:
-  /v1/file/:
+  /v1/file:
+    get:
+      description: Если файл есть в расчете то получим его состояние
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.File'
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      summary: Получить состояние текущего файла с датасетом
+      tags:
+      - file
     post:
       consumes:
       - multipart/form-data

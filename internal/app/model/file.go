@@ -9,10 +9,11 @@ import (
 type File struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name" validate:"required"`
-	Size      float32   `json:"size"`
+	Size      int64     `json:"size"`
 	CreateAt  time.Time `json:"createAt"`
 	SendAt    time.Time `json:"sendAt,omitempty"`
 	ReceiveAt time.Time `json:"receiveAt,omitempty"`
+	Status    string    `json:"status"`
 }
 
 func (u *File) Validate() error {

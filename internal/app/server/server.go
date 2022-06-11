@@ -4,6 +4,7 @@ import (
 	"hack/api"
 	"hack/internal/app/config"
 	"hack/internal/app/store"
+	"hack/internal/app/websocket"
 
 	_ "hack/docs"
 
@@ -17,15 +18,17 @@ type server struct {
 	store  store.Store
 	config config.Config
 	v1     api.Api
+	ws     *websocket.WS
 }
 
 // NewServer инициализируем сервер
-func NewServer(store store.Store, config config.Config, api api.Api) *server {
+func NewServer(store store.Store, config config.Config, api api.Api, ws *websocket.WS) *server {
 	s := &server{
 		router: echo.New(),
 		store:  store,
 		config: config,
 		v1:     api,
+		ws:     ws,
 	}
 
 	// Конфигурируем роутинг

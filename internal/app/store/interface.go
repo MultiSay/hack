@@ -14,9 +14,11 @@ type Store interface {
 
 //go:generate mockery --name=FileRepository --structname=FileRepository
 type FileRepository interface {
-	Create(context.Context, *model.File) error
-	Update(context.Context, *model.File) error
-	GetByID(context.Context, int) (*model.File, error)
+	Create(context.Context, model.File) (model.File, error)
+	Update(context.Context, model.File) error
+	GetByID(context.Context, int) (model.File, error)
+	GetList(context.Context) ([]model.File, error)
+	GetLast(context.Context) (model.File, error)
 }
 
 //go:generate mockery --name=RegionRepository --structname=RegionRepository
