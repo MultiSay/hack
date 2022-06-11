@@ -29,7 +29,7 @@ func (r *FileRepository) Create(ctx context.Context, p model.File) (model.File, 
 		p.Name,
 		time.Now(),
 		p.Size,
-	).Scan(p.ID)
+	).Scan(&p.ID)
 	return p, err
 }
 
