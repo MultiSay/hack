@@ -51,7 +51,7 @@ func (w *Worker) handle(ctx context.Context, f model.File) error {
 	// TODO Открыть файл и запустить скрипт обработки модели
 	log.Printf("[WORKER] Start python job")
 	c := exec.Command(
-		"/services/predict-loyal-city/main.py",
+		"/app/services/predict-loyal-city/main.py",
 		"-t",
 		"/"+f.Name,
 		"-c",
