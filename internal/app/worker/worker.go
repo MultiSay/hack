@@ -4,11 +4,13 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"hack/internal/app/config"
 	"hack/internal/app/model"
 	"hack/internal/app/store"
 	"hack/internal/app/websocket"
 	"log"
+	"os/exec"
 	"time"
 
 	"golang.org/x/sync/errgroup"
@@ -45,9 +47,26 @@ func (w *Worker) Init(ctx context.Context) error {
 	return nil
 }
 
-func (w *Worker) handle(ctx context.Context, o model.File) error {
-
+func (w *Worker) handle(ctx context.Context, f model.File) error {
 	// TODO Открыть файл и запустить скрипт обработки модели
+	log.Printf("[WORKER] Start python job")
+	c := exec.Command(
+		"/services/predict-loyal-city/",
+		"main.py",
+		"-t",
+		"/"+f.Name,
+		"-c",
+		"/services/predict-loyal-city/data/cities.csv",
+		"-p",
+		"/prediction_debit.json",
+		"-pt",
+		"debit",
+	)
+
+	if err := c.Run(); err != nil {
+		fmt.Println("Error: ", err)
+	}
+	log.Printf("[WORKER] End python job")
 	return nil
 }
 
