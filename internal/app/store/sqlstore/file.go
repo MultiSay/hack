@@ -47,14 +47,14 @@ func (r *FileRepository) Update(ctx context.Context, p model.File) error {
 		WHERE
 			id=$3`,
 		p.SendAt,
-		p.ReceiveAt,
+		p.ReceivedAt,
 	).Err()
 }
 
 func (r *FileRepository) GetByID(ctx context.Context, fileID int) (model.File, error) {
 	p := model.File{}
 	var send_at sql.NullTime
-	var receive_at sql.NullTime
+	var received_at sql.NullTime
 	if err := r.store.db.QueryRowContext(ctx,
 		`SELECT 
 			id,
@@ -74,7 +74,7 @@ func (r *FileRepository) GetByID(ctx context.Context, fileID int) (model.File, e
 		&p.Name,
 		&p.CreateAt,
 		&send_at,
-		&receive_at,
+		&received_at,
 		&p.Size,
 		&p.Status,
 	); err != nil {
@@ -83,15 +83,19 @@ func (r *FileRepository) GetByID(ctx context.Context, fileID int) (model.File, e
 		}
 		return p, err
 	}
-	p.SendAt = send_at.Time
-	p.ReceiveAt = receive_at.Time
+	if send_at.Valid {
+		p.SendAt = send_at.Time
+	}
+	if received_at.Valid {
+		p.ReceivedAt = received_at.Time
+	}
 	return p, nil
 }
 
 func (r *FileRepository) GetLast(ctx context.Context) (model.File, error) {
 	p := model.File{}
 	var send_at sql.NullTime
-	var receive_at sql.NullTime
+	var received_at sql.NullTime
 	if err := r.store.db.QueryRowContext(ctx,
 		`SELECT 
 			id,
@@ -111,7 +115,7 @@ func (r *FileRepository) GetLast(ctx context.Context) (model.File, error) {
 		&p.Name,
 		&p.CreateAt,
 		&send_at,
-		&receive_at,
+		&received_at,
 		&p.Size,
 		&p.Status,
 	); err != nil {
@@ -120,15 +124,19 @@ func (r *FileRepository) GetLast(ctx context.Context) (model.File, error) {
 		}
 		return p, err
 	}
-	p.SendAt = send_at.Time
-	p.ReceiveAt = receive_at.Time
+	if send_at.Valid {
+		p.SendAt = send_at.Time
+	}
+	if received_at.Valid {
+		p.ReceivedAt = received_at.Time
+	}
 	return p, nil
 }
 
 func (r *FileRepository) GetList(ctx context.Context) ([]model.File, error) {
 	list := []model.File{}
 	var send_at sql.NullTime
-	var receive_at sql.NullTime
+	var received_at sql.NullTime
 	rows, err := r.store.db.QueryContext(ctx,
 		`SELECT
     id, name, create_at, send_at, received_at, size, status
@@ -146,14 +154,18 @@ func (r *FileRepository) GetList(ctx context.Context) ([]model.File, error) {
 			&p.Name,
 			&p.CreateAt,
 			&send_at,
-			&receive_at,
+			&received_at,
 			&p.Status,
 		)
 		if err != nil {
 			return list, err
 		}
-		p.SendAt = send_at.Time
-		p.ReceiveAt = receive_at.Time
+		if send_at.Valid {
+			p.SendAt = send_at.Time
+		}
+		if received_at.Valid {
+			p.ReceivedAt = received_at.Time
+		}
 		list = append(list, p)
 	}
 

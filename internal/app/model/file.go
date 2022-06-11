@@ -7,13 +7,13 @@ import (
 )
 
 type File struct {
-	ID        int       `json:"id"`
-	Name      string    `json:"name" validate:"required"`
-	Size      int64     `json:"size"`
-	CreateAt  time.Time `json:"createAt"`
-	SendAt    time.Time `json:"sendAt,omitempty"`
-	ReceiveAt time.Time `json:"receiveAt,omitempty"`
-	Status    string    `json:"status"`
+	ID         int       `json:"id"`
+	Name       string    `json:"name" validate:"required"`
+	Size       int64     `json:"size"`
+	CreateAt   time.Time `json:"createAt"`
+	SendAt     time.Time `json:"sendAt,omitempty"`
+	ReceivedAt time.Time `json:"receivedAt,omitempty"`
+	Status     string    `json:"status"`
 }
 
 func (u *File) Validate() error {
