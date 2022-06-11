@@ -43,7 +43,8 @@ func (s *server) Start(address string) error {
 }
 
 func setResponseACAOHeaderFromRequest(req http.Request, resp echo.Response) {
-	resp.Header().Set(echo.HeaderAccessControlAllowOrigin, "*")
+	resp.Header().Set(echo.HeaderAccessControlAllowOrigin,
+		req.Header.Get(echo.HeaderAllow))
 }
 
 func ACAOHeaderOverwriteMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
@@ -61,6 +62,7 @@ func (s *server) configureRouter() {
 		ACAOHeaderOverwriteMiddleware,
 		middleware.RequestID(),
 		middleware.Logger(),
+		middleware.CORS(),
 	)
 	s.router.GET("/readyz", s.handleReadyz)
 	s.router.GET("/statusz", s.handleHealthz)
