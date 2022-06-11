@@ -18,17 +18,20 @@ func (r *FileRepository) Create(ctx context.Context, p model.File) (model.File, 
 			(
   			"name",
  				"create_at",
-				"size"
+				"size",
+				"status"
 			)
 		 VALUES 
 		 	(
 				$1,
 				$2,
-				$3
+				$3,
+				$4
 			) RETURNING id`,
 		p.Name,
 		time.Now(),
 		p.Size,
+		p.Status,
 	).Scan(&p.ID)
 	return p, err
 }
@@ -38,16 +41,20 @@ func (r *FileRepository) Update(ctx context.Context, p model.File) error {
 		`UPDATE files SET
 			(
 				send_at,
-				received_at
+				received_at,
+				status
 			) =
 		 	(
 				 $1,
-				 $2
+				 $2,
+				 $3
 			)
 		WHERE
-			id=$3`,
+			id=$4`,
 		p.SendAt,
 		p.ReceivedAt,
+		p.Status,
+		p.ID,
 	).Err()
 }
 
