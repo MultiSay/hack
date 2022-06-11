@@ -37,7 +37,7 @@ if __name__ == "__main__":
         data = {
             "Status": "Error",
             "Message": str(e),
-            "Data": {}
+            "Data": []
         }
 
     export_to_json(data, output.prediction)

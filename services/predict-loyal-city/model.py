@@ -20,4 +20,12 @@ def fit_predict_regression(X_train, y_train, X_test):
 
 def prepare_preds(pred1, pred2, keys):
     y_pred_total = 0.5 * (pred1 + pred2)
-    return dict(zip(keys, y_pred_total))
+    result = [
+        {"ID": i, "City": key, "PredictScore": y}
+        for i, (key, y) in enumerate(zip(keys, y_pred_total))
+    ]
+    result_sorted = sorted(result, key=lambda y: y["PredictScore"], reverse=True)
+    for i, item in enumerate(result_sorted):
+        item.update({"Position": i})
+
+    return result_sorted
