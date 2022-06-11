@@ -71,6 +71,24 @@ func (w *Worker) handle(ctx context.Context, f model.File) error {
 	if err != nil {
 		return err
 	}
+
+	w.ws.Clients.Range(func(key, value interface{}) bool {
+		result := model.PredictResult{
+			Status:  f.Status,
+			Message: "",
+			Data:    []model.RegionPredict{},
+		}
+
+		response, err := json.Marshal(result)
+		if err != nil {
+			log.Printf("key %s, error %s", key, err.Error())
+			return false
+		}
+
+		value.(*websocket.Client).WriteMessage(string(response))
+		return false
+	})
+
 	log.Printf("[WORKER] End python job")
 	return nil
 }
