@@ -65,6 +65,12 @@ func (w *Worker) handle(ctx context.Context, f model.File) error {
 	if err := c.Run(); err != nil {
 		fmt.Println("Error: ", err)
 	}
+
+	f.SendAt = time.Now()
+	err := w.store.File().Update(ctx, f)
+	if err != nil {
+		return err
+	}
 	log.Printf("[WORKER] End python job")
 	return nil
 }
