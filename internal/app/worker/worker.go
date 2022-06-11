@@ -71,11 +71,11 @@ func (w *Worker) handle(ctx context.Context, f model.File) error {
 }
 
 func (w *Worker) check(ctx context.Context, f model.File) error {
-	log.Println("starting check")
 	// TODO Открыть файл результата и записать в базу
 	a := &model.PredictResult{}
 
 	if a.Status == "SUCCESS" || a.Status == "INVALID" {
+		log.Printf("change status to %s", a.Status)
 		f.Status = a.Status
 		err := w.store.File().Update(ctx, f)
 		if err != nil {
@@ -103,7 +103,7 @@ func (w *Worker) check(ctx context.Context, f model.File) error {
 
 func (w *Worker) Add(o model.File) {
 	w.recordCh <- o
-	log.Println("send Order to chan")
+	log.Println("send File to chan")
 }
 
 func (w *Worker) Run(ctx context.Context) error {
@@ -118,10 +118,8 @@ func (w *Worker) Run(ctx context.Context) error {
 				return err
 			}
 			if err == nil && file.Status == "PROCESSED" {
-				log.Println("found new file in processed")
 				go w.check(ctx, file)
 			}
-			log.Println("sleep")
 			time.Sleep(3 * time.Second)
 		}
 	}
