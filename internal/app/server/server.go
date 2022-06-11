@@ -16,7 +16,7 @@ type server struct {
 	router *echo.Echo
 	store  store.Store
 	config config.Config
-	api    api.Api
+	v1     api.Api
 }
 
 // NewServer инициализируем сервер
@@ -25,7 +25,7 @@ func NewServer(store store.Store, config config.Config, api api.Api) *server {
 		router: echo.New(),
 		store:  store,
 		config: config,
-		api:    api,
+		v1:     api,
 	}
 
 	// Конфигурируем роутинг
@@ -50,4 +50,8 @@ func (s *server) configureRouter() {
 	s.router.GET("/swagger/*", echoSwagger.WrapHandler)
 	s.router.GET("/ws", s.handleWS)
 	s.router.GET("/test", s.hello)
+	v1 := s.router.Group("/v1")
+	{
+		v1.POST("/file", s.v1.AddFile())
+	}
 }
