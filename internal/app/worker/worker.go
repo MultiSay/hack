@@ -93,14 +93,14 @@ func (w *Worker) Run(ctx context.Context) error {
 		case <-ctx.Done():
 			return nil
 		default:
-			fileList, err := w.store.File().GetList(ctx)
+			file, err := w.store.File().GetLast(ctx)
 			if err != nil && err != sql.ErrNoRows {
 				log.Println(err)
 				return err
 			}
-			for _, f := range fileList {
-				log.Println("found new query row")
-				go w.check(ctx, f)
+			if err == nil && file.Status == "PROCESSED" {
+				log.Println("found new file in processed")
+				go w.check(ctx, file)
 			}
 			log.Println("sleep")
 			time.Sleep(3 * time.Second)
