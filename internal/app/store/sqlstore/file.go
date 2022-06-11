@@ -150,11 +150,13 @@ func (r *FileRepository) GetList(ctx context.Context) ([]model.File, error) {
 
 	for rows.Next() {
 		var p model.File
-		err = rows.Scan(&p.ID,
+		err = rows.Scan(
+			&p.ID,
 			&p.Name,
 			&p.CreateAt,
 			&send_at,
 			&received_at,
+			&p.Size,
 			&p.Status,
 		)
 		if err != nil {
