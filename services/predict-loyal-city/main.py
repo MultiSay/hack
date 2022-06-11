@@ -1,7 +1,7 @@
 import argparse
 
 from preparation import (
-    load_target,
+    load_transactions_and_get_target,
     load_cities_dataset,
     preprocess_cities_dataset,
     normalize_train_test,
@@ -15,10 +15,11 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--target", help="Path to target file")
     parser.add_argument("-c", "--cities", help="Path to cities dataset")
     parser.add_argument("-p", "--prediction", help="Path to prediction file")
+    parser.add_argument("-pt", "--product_type", help="Product type (debit, credit)")
 
     output = parser.parse_args()
     try:
-        target = load_target(output.target)
+        target = load_transactions_and_get_target(output.target, output.product_type)
         cities_df = load_cities_dataset(output.cities)
 
         train, y_train, test = preprocess_cities_dataset(cities_df, target)

@@ -90,3 +90,14 @@ COLUMNS_TO_NORMALIZE = [
     "volume_water",
     "workers",
 ]
+
+
+TRANSACTION_COLUMNS = [
+    "client_id",
+    "city",
+    "product_category_name"
+]
+
+
+DEBIT_NAME = "Договор на текущий счет для дебетовой карты"
+CREDIT_NAME = "Кредитная карта"

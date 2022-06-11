@@ -1,11 +1,25 @@
 import json
 import pandas as pd
 
-from consts import TRAIN_COLUMNS, COLUMNS_TO_NORMALIZE
+from consts import (
+    TRAIN_COLUMNS,
+    COLUMNS_TO_NORMALIZE,
+    TRANSACTION_COLUMNS,
+    DEBIT_NAME,
+    CREDIT_NAME,
+)
 
 
-def load_target(path):
-    target = pd.read_csv(path, index_col="city", squeeze=True)
+def load_transactions_and_get_target(path, product_type: str = "debit"):
+    df = pd.read_csv(path, usecols=TRANSACTION_COLUMNS)
+    if product_type == "debit":
+        mask = df["product_category_name"] == DEBIT_NAME
+    elif product_type == "credit":
+        mask = df["product_category_name"] == CREDIT_NAME
+    else:
+        raise KeyError
+
+    target = df[mask].groupby("city")["client_id"].nunique()
     return target.rename("target")
 
 
@@ -20,7 +34,10 @@ def load_cities_dataset(path):
 def preprocess_cities_dataset(cities_df, target, norm_target: bool = True):
     # assign target column to data
     cities_df = cities_df.merge(
-        target, left_index=True, right_index=True, how="left",
+        target,
+        left_index=True,
+        right_index=True,
+        how="left",
     )
 
     for col in COLUMNS_TO_NORMALIZE:
@@ -52,5 +69,5 @@ def normalize_train_test(train, test):
 
 
 def export_to_json(dct, filepath):
-    with open(filepath, 'w') as fp:
+    with open(filepath, "w") as fp:
         json.dump(dct, fp)
