@@ -43,8 +43,7 @@ func (s *server) Start(address string) error {
 }
 
 func setResponseACAOHeaderFromRequest(req http.Request, resp echo.Response) {
-	resp.Header().Set(echo.HeaderAccessControlAllowOrigin,
-		req.Header.Get(echo.HeaderOrigin))
+	resp.Header().Set(echo.HeaderAccessControlAllowOrigin, "*")
 }
 
 func ACAOHeaderOverwriteMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
