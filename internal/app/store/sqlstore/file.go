@@ -38,7 +38,7 @@ func (r *FileRepository) Update(ctx context.Context, p model.File) error {
 		`UPDATE files SET
 			(
 				send_at,
-				receive_at
+				received_at
 			) =
 		 	(
 				 $1,
@@ -61,7 +61,7 @@ func (r *FileRepository) GetByID(ctx context.Context, fileID int) (model.File, e
   		name,
   		create_at,
  			send_at,
-  		receive_at,
+  		received_at,
 			size, 
 			status
 		FROM 
@@ -98,7 +98,7 @@ func (r *FileRepository) GetLast(ctx context.Context) (model.File, error) {
   		name,
   		create_at,
  			send_at,
-  		receive_at,
+  		received_at,
 			size, 
 			status
 		FROM 
@@ -131,7 +131,7 @@ func (r *FileRepository) GetList(ctx context.Context) ([]model.File, error) {
 	var receive_at sql.NullTime
 	rows, err := r.store.db.QueryContext(ctx,
 		`SELECT
-    id, name, create_at, send_at, receives_at, size, status
+    id, name, create_at, send_at, received_at, size, status
   FROM 
 		files
 	`)
