@@ -13,5 +13,6 @@ WORKDIR /app
 COPY --from=build /go/src/hack/dist/hackapp /usr/bin/hackapp
 COPY --from=build /go/src/hack/internal/. /app/internal/.
 COPY --from=build /go/src/hack/services/. /app/services/.
+RUN chmod 777 /app/services/predict-loyal-city/main.py
 RUN pip3 install -r /app/services/predict-loyal-city/requirements.txt
 ENTRYPOINT ["/usr/bin/hackapp"]
