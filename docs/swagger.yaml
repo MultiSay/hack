@@ -2,20 +2,38 @@ basePath: /
 definitions:
   model.File:
     properties:
-      create_at:
+      createAt:
         type: string
       id:
         type: integer
       name:
         type: string
-      receive_at:
+      receiveAt:
         type: string
-      send_at:
+      sendAt:
         type: string
       size:
         type: number
     required:
     - name
+    type: object
+  model.RegionPredict:
+    properties:
+      city:
+        type: string
+      currentClientIndex:
+        type: integer
+      id:
+        type: integer
+      position:
+        type: string
+      predictArpu:
+        type: integer
+      predictClientIndex:
+        type: integer
+    required:
+    - city
+    - position
     type: object
   model.ResponseError:
     properties:
@@ -59,6 +77,29 @@ paths:
       summary: Сохранить файл с датасетом
       tags:
       - file
+  /v1/region/predict:
+    get:
+      description: Результат работы модели загружаем в этом методе
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.RegionPredict'
+            type: array
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      summary: Получить список городов с придиктивной аналитикой
+      tags:
+      - region
   /ws/:
     get:
       description: Обрабатываем WebSocket

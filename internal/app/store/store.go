@@ -4,4 +4,5 @@ package store
 //go:generate mockery --name=Store --structname=Store
 type Store interface {
 	File() FileRepository
+	Region() RegionRepository
 }

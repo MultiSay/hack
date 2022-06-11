@@ -15,8 +15,9 @@ import (
 )
 
 type Store struct {
-	db             *sql.DB
-	fileRepository *FileRepository
+	db               *sql.DB
+	fileRepository   *FileRepository
+	regionRepository *RegionRepository
 }
 
 func New(config config.Config) (*Store, error) {
@@ -54,4 +55,16 @@ func (s *Store) File() store.FileRepository {
 	}
 
 	return s.fileRepository
+}
+
+func (s *Store) Region() store.RegionRepository {
+	if s.regionRepository != nil {
+		return s.regionRepository
+	}
+
+	s.regionRepository = &RegionRepository{
+		store: s,
+	}
+
+	return s.regionRepository
 }

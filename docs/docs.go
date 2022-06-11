@@ -69,6 +69,41 @@ var doc = `{
                 }
             }
         },
+        "/v1/region/predict": {
+            "get": {
+                "description": "Результат работы модели загружаем в этом методе",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "region"
+                ],
+                "summary": "Получить список городов с придиктивной аналитикой",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.RegionPredict"
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
         "/ws/": {
             "get": {
                 "description": "Обрабатываем WebSocket",
@@ -100,7 +135,7 @@ var doc = `{
                 "name"
             ],
             "properties": {
-                "create_at": {
+                "createAt": {
                     "type": "string"
                 },
                 "id": {
@@ -109,14 +144,41 @@ var doc = `{
                 "name": {
                     "type": "string"
                 },
-                "receive_at": {
+                "receiveAt": {
                     "type": "string"
                 },
-                "send_at": {
+                "sendAt": {
                     "type": "string"
                 },
                 "size": {
                     "type": "number"
+                }
+            }
+        },
+        "model.RegionPredict": {
+            "type": "object",
+            "required": [
+                "city",
+                "position"
+            ],
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "currentClientIndex": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "predictArpu": {
+                    "type": "integer"
+                },
+                "predictClientIndex": {
+                    "type": "integer"
                 }
             }
         },

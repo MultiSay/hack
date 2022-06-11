@@ -11,3 +11,7 @@ type FileRepository interface {
 	Update(context.Context, *model.File) error
 	GetByID(context.Context, int) (*model.File, error)
 }
+
+type RegionRepository interface {
+	PredictList(context.Context) ([]model.RegionPredict, error)
+}
