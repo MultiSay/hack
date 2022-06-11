@@ -56,6 +56,7 @@ func (s *server) configureRouter() {
 	v1 := s.router.Group("/v1")
 	{
 		v1.POST("/file", s.v1.AddFile())
+		v1.GET("/file", s.v1.GetLastFile())
 		v1.GET("/region/predict", s.v1.GetRegionPredictList())
 	}
 }

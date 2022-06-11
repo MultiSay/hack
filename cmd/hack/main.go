@@ -15,7 +15,7 @@ import (
 // @version         1.0
 // @description     API for Moscow City Hack 2022.
 //
-// @host      localhost:8080
+// @host      51.250.44.134
 // @BasePath  /
 func main() {
 	config := config.Get()
