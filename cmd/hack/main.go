@@ -31,15 +31,14 @@ func main() {
 	ws := websocket.NewWS()
 	worker := worker.New(config, store, ws)
 	api := v1.New(store, config, worker)
-	log.Infof("[INIT] Start server")
 	srv := server.NewServer(store, config, api, ws)
-	if err := srv.Start(fmt.Sprintf("%s:%d", config.Host, config.Port)); err != nil && err != http.ErrServerClosed {
-		panic(err)
-	}
 	log.Infof("[INIT] Init worker")
 	ctx := context.Background()
 	worker.Init(ctx)
 	log.Infof("[INIT] Run worker")
 	go worker.Run(ctx)
 	log.Infof("[INIT] END")
+	if err := srv.Start(fmt.Sprintf("%s:%d", config.Host, config.Port)); err != nil && err != http.ErrServerClosed {
+		panic(err)
+	}
 }
