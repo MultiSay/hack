@@ -11,8 +11,8 @@ type File struct {
 	Name      string    `json:"name" validate:"required"`
 	Size      float32   `json:"size"`
 	CreateAt  time.Time `json:"create_at"`
-	SendAt    time.Time `json:"send_at"`
-	ReceiveAt time.Time `json:"receive_at"`
+	SendAt    time.Time `json:"send_at,omitempty"`
+	ReceiveAt time.Time `json:"receive_at,omitempty"`
 }
 
 func (u *File) Validate() error {

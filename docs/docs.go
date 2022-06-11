@@ -24,6 +24,51 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/file/": {
+            "post": {
+                "description": "Получаем файл с фронта с новым датасетом для расчета",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Сохранить файл с датасетом",
+                "parameters": [
+                    {
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "form data with file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.File"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
         "/ws/": {
             "get": {
                 "description": "Обрабатываем WebSocket",
@@ -49,6 +94,32 @@ var doc = `{
         }
     },
     "definitions": {
+        "model.File": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "create_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "receive_at": {
+                    "type": "string"
+                },
+                "send_at": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "number"
+                }
+            }
+        },
         "model.ResponseError": {
             "type": "object",
             "properties": {

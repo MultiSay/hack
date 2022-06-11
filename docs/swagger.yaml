@@ -1,5 +1,22 @@
 basePath: /
 definitions:
+  model.File:
+    properties:
+      create_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      receive_at:
+        type: string
+      send_at:
+        type: string
+      size:
+        type: number
+    required:
+    - name
+    type: object
   model.ResponseError:
     properties:
       error:
@@ -12,6 +29,36 @@ info:
   title: hack API
   version: "1.0"
 paths:
+  /v1/file/:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Получаем файл с фронта с новым датасетом для расчета
+      parameters:
+      - description: form data with file
+        in: formData
+        minLength: 1
+        name: file
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.File'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      summary: Сохранить файл с датасетом
+      tags:
+      - file
   /ws/:
     get:
       description: Обрабатываем WebSocket
