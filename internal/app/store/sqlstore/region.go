@@ -41,3 +41,23 @@ func (r *RegionRepository) PredictList(ctx context.Context) ([]model.RegionPredi
 
 	return list, nil
 }
+
+func (r *RegionRepository) PredictListUpdate(ctx context.Context, list []model.RegionPredict) error {
+	_, err := r.store.db.ExecContext(ctx, `TRUNCATE region_predict`)
+	if err != nil {
+		return err
+	}
+	for _, v := range list {
+		_, err := r.store.db.ExecContext(ctx,
+			`INSERT INTO "public"."region_predict" 
+				("position", "city", "predict_score") 
+			VALUES 
+				($1, $2, $2);
+		`, v.Position, v.City, v.PredictScore)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}

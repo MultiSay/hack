@@ -24,4 +24,5 @@ type FileRepository interface {
 //go:generate mockery --name=RegionRepository --structname=RegionRepository
 type RegionRepository interface {
 	PredictList(context.Context) ([]model.RegionPredict, error)
+	PredictListUpdate(context.Context, []model.RegionPredict) error
 }

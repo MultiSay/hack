@@ -10,6 +10,7 @@ import (
 	"hack/internal/app/store"
 	"hack/internal/app/websocket"
 	"log"
+	"os"
 	"os/exec"
 	"time"
 
@@ -58,7 +59,7 @@ func (w *Worker) handle(ctx context.Context, f model.File) error {
 		"-c",
 		"/services/predict-loyal-city/data/cities.csv",
 		"-p",
-		"/prediction_debit.json",
+		"/app/prediction_debit.json",
 		"-pt",
 		"debit",
 	)
@@ -96,7 +97,16 @@ func (w *Worker) handle(ctx context.Context, f model.File) error {
 
 func (w *Worker) check(ctx context.Context, f model.File) error {
 	// TODO Открыть файл результата и записать в базу
+	localFile, err := os.ReadFile(f.Name)
+	if err != nil {
+		return nil
+	}
+
 	a := &model.PredictResult{}
+	err = json.Unmarshal(localFile, a)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	if a.Status == "SUCCESS" || a.Status == "INVALID" {
 		log.Printf("change status to %s", a.Status)
@@ -121,6 +131,11 @@ func (w *Worker) check(ctx context.Context, f model.File) error {
 			value.(*websocket.Client).WriteMessage(string(response))
 			return false
 		})
+
+		err = w.store.Region().PredictListUpdate(ctx, a.Data)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
