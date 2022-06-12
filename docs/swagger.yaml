@@ -82,6 +82,19 @@ definitions:
       error:
         type: string
     type: object
+  model.Telegram:
+    properties:
+      category:
+        type: string
+      id:
+        type: integer
+      n_subscribers:
+        type: integer
+      name:
+        type: string
+      name_id:
+        type: string
+    type: object
 host: 51.250.44.134
 info:
   contact: {}

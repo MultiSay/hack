@@ -20,6 +20,7 @@ type Store struct {
 	regionRepository   *RegionRepository
 	leadRepository     *LeadRepository
 	compaignRepository *CompaignRepository
+	telegramRepository *TelegramRepository
 }
 
 func New(config config.Config) (*Store, error) {
@@ -93,4 +94,16 @@ func (s *Store) Compaign() store.CompaignRepository {
 	}
 
 	return s.compaignRepository
+}
+
+func (s *Store) Telegram() store.TelegramRepository {
+	if s.telegramRepository != nil {
+		return s.telegramRepository
+	}
+
+	s.telegramRepository = &TelegramRepository{
+		store: s,
+	}
+
+	return s.telegramRepository
 }

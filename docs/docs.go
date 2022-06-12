@@ -353,6 +353,26 @@ var doc = `{
                     "type": "string"
                 }
             }
+        },
+        "model.Telegram": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "n_subscribers": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "name_id": {
+                    "type": "string"
+                }
+            }
         }
     }
 }`

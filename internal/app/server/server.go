@@ -75,6 +75,7 @@ func (s *server) configureRouter() {
 		v1.GET("/file", s.v1.GetLastFile())
 		v1.GET("/lead", s.v1.GetLeadList())
 		v1.GET("/compaign", s.v1.GetCompaignList())
+		v1.GET("/telegram", s.v1.GetTelegramList())
 		v1.GET("/region/predict", s.v1.GetRegionPredictList())
 	}
 }

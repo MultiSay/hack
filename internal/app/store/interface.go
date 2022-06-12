@@ -12,6 +12,7 @@ type Store interface {
 	Region() RegionRepository
 	Lead() LeadRepository
 	Compaign() CompaignRepository
+	Telegram() TelegramRepository
 }
 
 //go:generate mockery --name=FileRepository --structname=FileRepository
@@ -35,4 +36,8 @@ type LeadRepository interface {
 
 type CompaignRepository interface {
 	GetList(context.Context) ([]model.Compaign, error)
+}
+
+type TelegramRepository interface {
+	GetList(context.Context) ([]model.Telegram, error)
 }

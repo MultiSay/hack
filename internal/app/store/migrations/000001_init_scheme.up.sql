@@ -44,3 +44,12 @@ CREATE TABLE "public"."compaign" (
     "theme" varchar,
     PRIMARY KEY ("id")
 );
+
+CREATE TABLE "public"."telegram" (
+    "id" int4 NOT NULL DEFAULT nextval('telegram_id_seq' :: regclass),
+    "name_id" varchar,
+    "name" varchar,
+    "n_subscribers" int4,
+    "category" varchar,
+    PRIMARY KEY ("id")
+);

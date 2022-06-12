@@ -15,4 +15,7 @@ type Api interface {
 
 	// compaign
 	GetCompaignList() echo.HandlerFunc
+
+	//telegram
+	GetTelegramList() echo.HandlerFunc
 }
