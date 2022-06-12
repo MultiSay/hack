@@ -30,14 +30,17 @@ type RegionRepository interface {
 	PredictListUpdate(context.Context, []model.RegionPredict) error
 }
 
+//go:generate mockery --name=LeadRepository --structname=LeadRepository
 type LeadRepository interface {
 	GetList(context.Context) ([]model.Lead, error)
 }
 
+//go:generate mockery --name=CompaignRepository --structname=CompaignRepository
 type CompaignRepository interface {
 	GetList(context.Context) ([]model.Compaign, error)
 }
 
+//go:generate mockery --name=TelegramRepository --structname=TelegramRepository
 type TelegramRepository interface {
 	GetList(context.Context) ([]model.Telegram, error)
 }
