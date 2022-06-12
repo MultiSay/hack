@@ -99,13 +99,15 @@ func (w *Worker) check(ctx context.Context, f model.File) error {
 	// TODO Открыть файл результата и записать в базу
 	localFile, err := os.ReadFile(f.Name)
 	if err != nil {
+		log.Printf("file reading err %s", err)
 		return nil
 	}
 
 	a := &model.PredictResult{}
 	err = json.Unmarshal(localFile, a)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("file parsing err %s", err)
+		return nil
 	}
 
 	if a.Status == "SUCCESS" || a.Status == "INVALID" {
