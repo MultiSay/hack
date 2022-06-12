@@ -115,6 +115,7 @@ func (w *Worker) check(ctx context.Context, f model.File) error {
 		f.Status = a.Status
 
 		// update file table
+		f.ReceivedAt = time.Now()
 		err := w.store.File().Update(ctx, f)
 		if err != nil {
 			return err
