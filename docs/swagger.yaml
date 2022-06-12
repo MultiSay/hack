@@ -16,8 +16,29 @@ definitions:
         type: integer
       status:
         type: string
+      status_message:
+        type: string
     required:
     - name
+    type: object
+  model.Lead:
+    properties:
+      client_id:
+        type: string
+      cpc:
+        type: integer
+      date:
+        type: string
+      id:
+        type: integer
+      product_category_name:
+        type: string
+      utm_campaign:
+        type: string
+      utm_content:
+        type: string
+      utm_source:
+        type: string
     type: object
   model.RegionPredict:
     properties:
@@ -28,7 +49,7 @@ definitions:
       id:
         type: integer
       position:
-        type: string
+        type: integer
       predictArpu:
         type: integer
       predictClientIndex:
@@ -99,6 +120,29 @@ paths:
           schema:
             $ref: '#/definitions/model.ResponseError'
       summary: Сохранить файл с датасетом
+      tags:
+      - file
+  /v1/lead:
+    get:
+      description: Получить список Лидов
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Lead'
+            type: array
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      summary: Получить список Лидов
       tags:
       - file
   /v1/region/predict:

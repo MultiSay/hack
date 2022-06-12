@@ -99,6 +99,41 @@ var doc = `{
                 }
             }
         },
+        "/v1/lead": {
+            "get": {
+                "description": "Получить список Лидов",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Получить список Лидов",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Lead"
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/region/predict": {
             "get": {
                 "description": "Результат работы модели загружаем в этом методе",
@@ -185,6 +220,38 @@ var doc = `{
                 },
                 "status": {
                     "type": "string"
+                },
+                "status_message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Lead": {
+            "type": "object",
+            "properties": {
+                "client_id": {
+                    "type": "string"
+                },
+                "cpc": {
+                    "type": "integer"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "product_category_name": {
+                    "type": "string"
+                },
+                "utm_campaign": {
+                    "type": "string"
+                },
+                "utm_content": {
+                    "type": "string"
+                },
+                "utm_source": {
+                    "type": "string"
                 }
             }
         },
@@ -205,7 +272,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "position": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "predictArpu": {
                     "type": "integer"
