@@ -68,7 +68,7 @@ func (h *Api) AddFile() echo.HandlerFunc {
 
 		h.worker.Add(f)
 
-		return c.JSON(http.StatusAccepted, f)
+		return c.JSON(http.StatusCreated, f)
 	}
 }
 
