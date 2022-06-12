@@ -34,7 +34,7 @@ func (h *Api) AddFile() echo.HandlerFunc {
 		// Get file uploaded via Form
 		file, fileHeader, err := c.Request().FormFile("file")
 		if err != nil {
-			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 		}
 		defer file.Close()
 

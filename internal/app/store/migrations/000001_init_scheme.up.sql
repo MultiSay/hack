@@ -15,9 +15,9 @@ CREATE TABLE "public"."region_predict" (
     "id" int4 NOT NULL DEFAULT nextval('region_predict_id_seq' :: regclass),
     "position" int4 NOT NULL,
     "city" varchar NOT NULL DEFAULT '' :: character varying,
-    "current_client_index" int4 NOT NULL DEFAULT 0,
-    "predict_client_index" int4 NOT NULL DEFAULT 0,
-    "predict_arpu" int4 NOT NULL DEFAULT 0,
+    "current_client_index" float4 NOT NULL DEFAULT 0,
+    "predict_client_index" float4 NOT NULL DEFAULT 0,
+    "predict_arpu" float4 NOT NULL DEFAULT 0,
     "predict_score" float4 NOT NULL DEFAULT 0,
     "product" varchar NOT NULL DEFAULT '' :: character varying,
     PRIMARY KEY ("id")

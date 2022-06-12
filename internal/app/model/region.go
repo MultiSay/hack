@@ -8,9 +8,9 @@ type RegionPredict struct {
 	ID                 int     `json:"id"`
 	Position           int     `json:"position" validate:"required"`
 	City               string  `json:"city" validate:"required"`
-	CurrentClientIndex int     `json:"currentClientIndex,omitempty"`
-	PredictClientIndex int     `json:"predictClientIndex,omitempty"`
-	PredictArpu        int     `json:"predictArpu,omitempty"`
+	CurrentClientIndex float32 `json:"currentClientIndex,omitempty"`
+	PredictClientIndex float32 `json:"predictClientIndex,omitempty"`
+	PredictArpu        float32 `json:"predictArpu,omitempty"`
 	PredictScore       float32 `json:"predictScore,omitempty"`
 	Product            string  `json:"product"`
 }
