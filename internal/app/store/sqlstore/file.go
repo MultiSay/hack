@@ -42,18 +42,21 @@ func (r *FileRepository) Update(ctx context.Context, p model.File) error {
 			(
 				send_at,
 				received_at,
-				status
+				status,
+				status_message
 			) =
 		 	(
 				 $1,
 				 $2,
-				 $3
+				 $3,
+				 $4
 			)
 		WHERE
-			id=$4`,
+			id=$5`,
 		p.SendAt,
 		p.ReceivedAt,
 		p.Status,
+		p.StatusMessage,
 		p.ID,
 	).Err()
 }

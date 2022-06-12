@@ -99,7 +99,6 @@ func (w *Worker) check(ctx context.Context, f model.File) error {
 	// TODO Открыть файл результата и записать в базу
 	localFile, err := os.ReadFile("prediction_debit.json")
 	if err != nil {
-		log.Printf("file reading err %s", err)
 		return nil
 	}
 
@@ -116,6 +115,9 @@ func (w *Worker) check(ctx context.Context, f model.File) error {
 
 		// update file table
 		f.ReceivedAt = time.Now()
+		if len(a.Message) > 0 {
+			f.StatusMessage = a.Message
+		}
 		err := w.store.File().Update(ctx, f)
 		if err != nil {
 			return err
