@@ -51,10 +51,10 @@ func (r *RegionRepository) PredictListUpdate(ctx context.Context, list []model.R
 	for _, v := range list {
 		_, err := r.store.db.ExecContext(ctx,
 			`INSERT INTO "public"."region_predict" 
-				("position", "city", "predict_score") 
+				("position", "city", "predict_score", "current_client_index", "predict_client_index") 
 			VALUES 
-				($1, $2, $3);
-		`, v.Position, v.City, v.PredictScore)
+				($1, $2, $3, $4, $5);
+		`, v.Position, v.City, v.PredictScore, v.CurrentClientIndex, v.PredictClientIndex)
 		if err != nil {
 			return err
 		}
