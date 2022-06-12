@@ -1,4 +1,5 @@
 import argparse
+import pandas as pd
 
 from preparation import (
     load_transactions_and_get_target,
@@ -24,10 +25,12 @@ if __name__ == "__main__":
 
         train, y_train, test = preprocess_cities_dataset(cities_df, target)
         train_normed, test_normed = normalize_train_test(train, test)
+        full = pd.concat([train, test])
+        full_normed = pd.concat([train_normed, test_normed])
 
-        y_pred_catboost = fit_predict_catboost(train, y_train, test)
-        y_pred_regression = fit_predict_regression(train_normed, y_train, test_normed)
-        y_pred_total = prepare_preds(y_pred_catboost, y_pred_regression, test.index)
+        y_pred_catboost = fit_predict_catboost(train, y_train, full)
+        y_pred_regression = fit_predict_regression(train_normed, y_train, full_normed)
+        y_pred_total = prepare_preds(y_pred_catboost, y_pred_regression, y_train, full.index, output.product_type)
 
         data = {
             "status": "SUCCESS",
