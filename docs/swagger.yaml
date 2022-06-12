@@ -8,7 +8,7 @@ definitions:
         type: integer
       name:
         type: string
-      receiveAt:
+      receivedAt:
         type: string
       sendAt:
         type: string
@@ -33,6 +33,8 @@ definitions:
         type: integer
       predictClientIndex:
         type: integer
+      predictScore:
+        type: number
     required:
     - city
     - position

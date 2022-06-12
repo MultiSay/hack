@@ -159,7 +159,7 @@
                 "name": {
                     "type": "string"
                 },
-                "receiveAt": {
+                "receivedAt": {
                     "type": "string"
                 },
                 "sendAt": {
@@ -197,6 +197,9 @@
                 },
                 "predictClientIndex": {
                     "type": "integer"
+                },
+                "predictScore": {
+                    "type": "number"
                 }
             }
         },

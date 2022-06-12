@@ -174,7 +174,7 @@ var doc = `{
                 "name": {
                     "type": "string"
                 },
-                "receiveAt": {
+                "receivedAt": {
                     "type": "string"
                 },
                 "sendAt": {
@@ -212,6 +212,9 @@ var doc = `{
                 },
                 "predictClientIndex": {
                     "type": "integer"
+                },
+                "predictScore": {
+                    "type": "number"
                 }
             }
         },
