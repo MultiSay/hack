@@ -52,7 +52,7 @@ func (r *RegionRepository) PredictListUpdate(ctx context.Context, list []model.R
 			`INSERT INTO "public"."region_predict" 
 				("position", "city", "predict_score") 
 			VALUES 
-				($1, $2, $2);
+				($1, $2, $3);
 		`, v.Position, v.City, v.PredictScore)
 		if err != nil {
 			return err
