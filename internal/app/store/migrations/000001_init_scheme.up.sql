@@ -19,6 +19,7 @@ CREATE TABLE "public"."region_predict" (
     "predict_client_index" int4 NOT NULL DEFAULT 0,
     "predict_arpu" int4 NOT NULL DEFAULT 0,
     "predict_score" float4 NOT NULL DEFAULT 0,
+    "product" varchar NOT NULL DEFAULT '' :: character varying,
     PRIMARY KEY ("id")
 );
 

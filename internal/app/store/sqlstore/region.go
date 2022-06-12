@@ -14,7 +14,7 @@ func (r *RegionRepository) PredictList(ctx context.Context) ([]model.RegionPredi
 
 	rows, err := r.store.db.QueryContext(ctx,
 		`SELECT
-    id, position, city, current_client_index, predict_client_index, predict_arpu, predict_score
+    id, position, city, current_client_index, predict_client_index, predict_arpu, predict_score, product
   FROM 
 		region_predict
 	`)
@@ -32,6 +32,7 @@ func (r *RegionRepository) PredictList(ctx context.Context) ([]model.RegionPredi
 			&p.PredictClientIndex,
 			&p.PredictArpu,
 			&p.PredictScore,
+			&p.Product,
 		)
 
 		if err != nil {
@@ -51,10 +52,10 @@ func (r *RegionRepository) PredictListUpdate(ctx context.Context, list []model.R
 	for _, v := range list {
 		_, err := r.store.db.ExecContext(ctx,
 			`INSERT INTO "public"."region_predict" 
-				("position", "city", "predict_score", "current_client_index", "predict_client_index") 
+				("position", "city", "predict_score", "current_client_index", "predict_client_index", "product") 
 			VALUES 
-				($1, $2, $3, $4, $5);
-		`, v.Position, v.City, v.PredictScore, v.CurrentClientIndex, v.PredictClientIndex)
+				($1, $2, $3, $4, $5, $6);
+		`, v.Position, v.City, v.PredictScore, v.CurrentClientIndex, v.PredictClientIndex, v.Product)
 		if err != nil {
 			return err
 		}

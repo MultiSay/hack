@@ -12,6 +12,7 @@ type RegionPredict struct {
 	PredictClientIndex int     `json:"predictClientIndex,omitempty"`
 	PredictArpu        int     `json:"predictArpu,omitempty"`
 	PredictScore       float32 `json:"predictScore,omitempty"`
+	Product            string  `json:"product"`
 }
 
 type PredictResult struct {
