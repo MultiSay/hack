@@ -5,13 +5,13 @@ import (
 )
 
 type RegionPredict struct {
-	ID                 int    `json:"id"`
-	Position           string `json:"position" validate:"required"`
-	City               string `json:"city" validate:"required"`
-	CurrentClientIndex int    `json:"currentClientIndex,omitempty"`
-	PredictClientIndex int    `json:"predictClientIndex,omitempty"`
-	PredictArpu        int    `json:"predictArpu,omitempty"`
-	PredictScore       int    `json:"predictScore,omitempty"`
+	ID                 int     `json:"id"`
+	Position           string  `json:"position" validate:"required"`
+	City               string  `json:"city" validate:"required"`
+	CurrentClientIndex int     `json:"currentClientIndex,omitempty"`
+	PredictClientIndex int     `json:"predictClientIndex,omitempty"`
+	PredictArpu        int     `json:"predictArpu,omitempty"`
+	PredictScore       float32 `json:"predictScore,omitempty"`
 }
 
 type PredictResult struct {
