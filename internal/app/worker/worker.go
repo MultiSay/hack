@@ -113,11 +113,23 @@ func (w *Worker) check(ctx context.Context, f model.File) error {
 	if a.Status == "SUCCESS" || a.Status == "INVALID" {
 		log.Printf("change status to %s", a.Status)
 		f.Status = a.Status
+
+		// update file table
 		err := w.store.File().Update(ctx, f)
 		if err != nil {
 			return err
 		}
+
+		// update predict table
+		err = w.store.Region().PredictListUpdate(ctx, a.Data)
+		if err != nil {
+			log.Printf("update table %s", err)
+			return err
+		}
+
+		log.Printf("Start WS send")
 		w.ws.Clients.Range(func(key, value interface{}) bool {
+			log.Printf("send to client %s", a.Status)
 			result := model.PredictResult{
 				Status:  a.Status,
 				Message: a.Message,
@@ -133,11 +145,8 @@ func (w *Worker) check(ctx context.Context, f model.File) error {
 			value.(*websocket.Client).WriteMessage(string(response))
 			return false
 		})
+		log.Printf("End WS send")
 
-		err = w.store.Region().PredictListUpdate(ctx, a.Data)
-		if err != nil {
-			return err
-		}
 	}
 	return nil
 }
