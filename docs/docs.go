@@ -106,7 +106,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "file"
+                    "lead"
                 ],
                 "summary": "Получить список Лидов",
                 "responses": {

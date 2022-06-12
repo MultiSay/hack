@@ -144,7 +144,7 @@ paths:
             $ref: '#/definitions/model.ResponseError'
       summary: Получить список Лидов
       tags:
-      - file
+      - lead
   /v1/region/predict:
     get:
       description: Результат работы модели загружаем в этом методе

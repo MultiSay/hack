@@ -10,7 +10,7 @@ import (
 // GetLeadList Получить список Лидов
 // GetLeadList godoc
 // @Summary Получить список Лидов
-// @Tags file
+// @Tags lead
 // @Description Получить список Лидов
 // @Produce json
 // @Success 200 {object} []model.Lead
