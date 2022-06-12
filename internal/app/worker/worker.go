@@ -97,7 +97,7 @@ func (w *Worker) handle(ctx context.Context, f model.File) error {
 
 func (w *Worker) check(ctx context.Context, f model.File) error {
 	// TODO Открыть файл результата и записать в базу
-	localFile, err := os.ReadFile(f.Name)
+	localFile, err := os.ReadFile("prediction_debit.json")
 	if err != nil {
 		log.Printf("file reading err %s", err)
 		return nil
