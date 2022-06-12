@@ -15,10 +15,11 @@ import (
 )
 
 type Store struct {
-	db               *sql.DB
-	fileRepository   *FileRepository
-	regionRepository *RegionRepository
-	leadRepository   *LeadRepository
+	db                 *sql.DB
+	fileRepository     *FileRepository
+	regionRepository   *RegionRepository
+	leadRepository     *LeadRepository
+	compaignRepository *CompaignRepository
 }
 
 func New(config config.Config) (*Store, error) {
@@ -80,4 +81,16 @@ func (s *Store) Lead() store.LeadRepository {
 	}
 
 	return s.leadRepository
+}
+
+func (s *Store) Compaign() store.CompaignRepository {
+	if s.compaignRepository != nil {
+		return s.compaignRepository
+	}
+
+	s.compaignRepository = &CompaignRepository{
+		store: s,
+	}
+
+	return s.compaignRepository
 }

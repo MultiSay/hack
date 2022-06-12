@@ -24,6 +24,41 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/compaign": {
+            "get": {
+                "description": "Получить список Компаний",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "compaign"
+                ],
+                "summary": "Получить список Компаний",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Compaign"
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/file": {
             "get": {
                 "description": "Если файл есть в расчете то получим его состояние",
@@ -194,6 +229,32 @@ var doc = `{
         }
     },
     "definitions": {
+        "model.Compaign": {
+            "type": "object",
+            "properties": {
+                "age_from": {
+                    "type": "integer"
+                },
+                "age_to": {
+                    "type": "integer"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "theme": {
+                    "type": "string"
+                },
+                "utm_campaign": {
+                    "type": "string"
+                }
+            }
+        },
         "model.File": {
             "type": "object",
             "required": [

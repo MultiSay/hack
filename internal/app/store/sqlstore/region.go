@@ -14,7 +14,7 @@ func (r *RegionRepository) PredictList(ctx context.Context) ([]model.RegionPredi
 
 	rows, err := r.store.db.QueryContext(ctx,
 		`SELECT
-    id, position, city, current_client_index, predict_client_index, predict_arpu
+    id, position, city, current_client_index, predict_client_index, predict_arpu, predict_score
   FROM 
 		region_predict
 	`)
@@ -31,6 +31,7 @@ func (r *RegionRepository) PredictList(ctx context.Context) ([]model.RegionPredi
 			&p.CurrentClientIndex,
 			&p.PredictClientIndex,
 			&p.PredictArpu,
+			&p.PredictScore,
 		)
 
 		if err != nil {

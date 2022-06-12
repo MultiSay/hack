@@ -33,3 +33,14 @@ CREATE TABLE "public"."leads" (
     "cpc" int4 NOT NULL,
     PRIMARY KEY ("id")
 );
+
+CREATE TABLE "public"."compaign" (
+    "id" int4 NOT NULL DEFAULT nextval('compaign_id_seq' :: regclass),
+    "utm_campaign" varchar,
+    "gender" varchar,
+    "age_from" int4,
+    "age_to" int4,
+    "city" varchar,
+    "theme" varchar,
+    PRIMARY KEY ("id")
+);

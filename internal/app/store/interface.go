@@ -11,6 +11,7 @@ type Store interface {
 	File() FileRepository
 	Region() RegionRepository
 	Lead() LeadRepository
+	Compaign() CompaignRepository
 }
 
 //go:generate mockery --name=FileRepository --structname=FileRepository
@@ -30,4 +31,8 @@ type RegionRepository interface {
 
 type LeadRepository interface {
 	GetList(context.Context) ([]model.Lead, error)
+}
+
+type CompaignRepository interface {
+	GetList(context.Context) ([]model.Compaign, error)
 }

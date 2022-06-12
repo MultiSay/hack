@@ -12,4 +12,7 @@ type Api interface {
 
 	// lead
 	GetLeadList() echo.HandlerFunc
+
+	// compaign
+	GetCompaignList() echo.HandlerFunc
 }

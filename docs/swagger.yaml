@@ -1,5 +1,22 @@
 basePath: /
 definitions:
+  model.Compaign:
+    properties:
+      age_from:
+        type: integer
+      age_to:
+        type: integer
+      city:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      theme:
+        type: string
+      utm_campaign:
+        type: string
+    type: object
   model.File:
     properties:
       createAt:
@@ -72,6 +89,29 @@ info:
   title: hack API
   version: "1.0"
 paths:
+  /v1/compaign:
+    get:
+      description: Получить список Компаний
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Compaign'
+            type: array
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      summary: Получить список Компаний
+      tags:
+      - compaign
   /v1/file:
     get:
       description: Если файл есть в расчете то получим его состояние
