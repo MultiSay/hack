@@ -24,4 +24,4 @@ CI & CD реализован на базе Github CI с автоматическ
 - scikit-learn
 
 ## How it work
-
+![image](howitwork.jpeg)
