@@ -15,7 +15,7 @@ func (r *CompaignRepository) GetList(ctx context.Context) ([]model.Compaign, err
 		`SELECT
     id, utm_campaign, gender, age_from, age_to, city, theme
   FROM 
-		leads
+		compaign
 	`)
 
 	if err != nil {
