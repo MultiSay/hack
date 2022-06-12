@@ -177,7 +177,7 @@ paths:
       - file
   /v1/lead:
     get:
-      description: Получить список телеграм каналов
+      description: Получить список Лидов
       produces:
       - application/json
       responses:
@@ -185,7 +185,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.Telegram'
+              $ref: '#/definitions/model.Lead'
             type: array
         "204":
           description: No Content
@@ -195,9 +195,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.ResponseError'
-      summary: Получить список телеграм каналов
+      summary: Получить список Лидов
       tags:
-      - telegram
+      - lead
   /v1/region/predict:
     get:
       description: Результат работы модели загружаем в этом методе

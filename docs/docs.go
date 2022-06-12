@@ -136,21 +136,21 @@ var doc = `{
         },
         "/v1/lead": {
             "get": {
-                "description": "Получить список телеграм каналов",
+                "description": "Получить список Лидов",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "telegram"
+                    "lead"
                 ],
-                "summary": "Получить список телеграм каналов",
+                "summary": "Получить список Лидов",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.Telegram"
+                                "$ref": "#/definitions/model.Lead"
                             }
                         }
                     },
