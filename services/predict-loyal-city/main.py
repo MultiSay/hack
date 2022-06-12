@@ -30,15 +30,15 @@ if __name__ == "__main__":
         y_pred_total = prepare_preds(y_pred_catboost, y_pred_regression, test.index)
 
         data = {
-            "Status": "Ok",
-            "Message": None,
-            "Data": y_pred_total
+            "status": "SUCCESS",
+            "message": None,
+            "data": y_pred_total
         }
     except Exception as e:
         data = {
-            "Status": "Error",
-            "Message": str(e),
-            "Data": []
+            "status": "INVALID",
+            "message": str(e),
+            "data": []
         }
 
     export_to_json(data, output.prediction)
