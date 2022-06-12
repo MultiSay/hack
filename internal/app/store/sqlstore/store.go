@@ -18,6 +18,7 @@ type Store struct {
 	db               *sql.DB
 	fileRepository   *FileRepository
 	regionRepository *RegionRepository
+	leadRepository   *LeadRepository
 }
 
 func New(config config.Config) (*Store, error) {
@@ -67,4 +68,16 @@ func (s *Store) Region() store.RegionRepository {
 	}
 
 	return s.regionRepository
+}
+
+func (s *Store) Lead() store.LeadRepository {
+	if s.leadRepository != nil {
+		return s.leadRepository
+	}
+
+	s.leadRepository = &LeadRepository{
+		store: s,
+	}
+
+	return s.leadRepository
 }

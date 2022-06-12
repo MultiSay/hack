@@ -9,4 +9,7 @@ type Api interface {
 
 	// region
 	GetRegionPredictList() echo.HandlerFunc
+
+	// lead
+	GetLeadList() echo.HandlerFunc
 }

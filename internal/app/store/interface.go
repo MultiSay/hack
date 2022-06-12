@@ -10,6 +10,7 @@ import (
 type Store interface {
 	File() FileRepository
 	Region() RegionRepository
+	Lead() LeadRepository
 }
 
 //go:generate mockery --name=FileRepository --structname=FileRepository
@@ -25,4 +26,8 @@ type FileRepository interface {
 type RegionRepository interface {
 	PredictList(context.Context) ([]model.RegionPredict, error)
 	PredictListUpdate(context.Context, []model.RegionPredict) error
+}
+
+type LeadRepository interface {
+	GetList(context.Context) ([]model.Lead, error)
 }
