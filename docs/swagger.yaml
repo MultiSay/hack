@@ -62,17 +62,19 @@ definitions:
       city:
         type: string
       currentClientIndex:
-        type: integer
+        type: number
       id:
         type: integer
       position:
         type: integer
       predictArpu:
-        type: integer
+        type: number
       predictClientIndex:
-        type: integer
+        type: number
       predictScore:
         type: number
+      product:
+        type: string
     required:
     - city
     - position
@@ -221,6 +223,29 @@ paths:
       summary: Получить список городов с придиктивной аналитикой
       tags:
       - region
+  /v1/telegram:
+    get:
+      description: Получить список телеграм каналов
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Telegram'
+            type: array
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      summary: Получить список телеграм каналов
+      tags:
+      - telegram
   /ws/:
     get:
       description: Обрабатываем WebSocket

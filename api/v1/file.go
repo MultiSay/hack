@@ -2,8 +2,10 @@ package v1
 
 import (
 	"database/sql"
+	"fmt"
 	"hack/internal/app/model"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -31,6 +33,18 @@ func (h *Api) AddFile() echo.HandlerFunc {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
 
+		for k, v := range c.Request().Form {
+			log.Printf("Form")
+			log.Printf("k=%s, v=%s", k, v)
+		}
+		for k, v := range c.Request().PostForm {
+			log.Printf("PostForm")
+			log.Printf("k=%s, v=%s", k, v)
+		}
+		for k, v := range c.Request().MultipartForm.File {
+			log.Printf("MultipartForm")
+			fmt.Println(k, v)
+		}
 		// Get file uploaded via Form
 		file, fileHeader, err := c.Request().FormFile("file")
 		if err != nil {

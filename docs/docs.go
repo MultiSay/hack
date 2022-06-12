@@ -204,6 +204,41 @@ var doc = `{
                 }
             }
         },
+        "/v1/telegram": {
+            "get": {
+                "description": "Получить список телеграм каналов",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "telegram"
+                ],
+                "summary": "Получить список телеграм каналов",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Telegram"
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
         "/ws/": {
             "get": {
                 "description": "Обрабатываем WebSocket",
@@ -327,7 +362,7 @@ var doc = `{
                     "type": "string"
                 },
                 "currentClientIndex": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "id": {
                     "type": "integer"
@@ -336,13 +371,16 @@ var doc = `{
                     "type": "integer"
                 },
                 "predictArpu": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "predictClientIndex": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "predictScore": {
                     "type": "number"
+                },
+                "product": {
+                    "type": "string"
                 }
             }
         },
