@@ -16,7 +16,7 @@ import (
 // @Success 200 {object} []model.Telegram
 // @Failure 204 {object} model.ResponseError
 // @Failure 500 {object} model.ResponseError
-// @Router /v1/lead [get]
+// @Router /v1/telegram [get]
 func (h *Api) GetTelegramList() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		file, err := h.store.Telegram().GetList(c.Request().Context())
