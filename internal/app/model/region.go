@@ -6,7 +6,7 @@ import (
 
 type RegionPredict struct {
 	ID                 int     `json:"id"`
-	Position           string  `json:"position" validate:"required"`
+	Position           int     `json:"position" validate:"required"`
 	City               string  `json:"city" validate:"required"`
 	CurrentClientIndex int     `json:"currentClientIndex,omitempty"`
 	PredictClientIndex int     `json:"predictClientIndex,omitempty"`
