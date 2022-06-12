@@ -70,4 +70,4 @@ def normalize_train_test(train, test):
 
 def export_to_json(dct, filepath):
     with open(filepath, "w") as fp:
-        json.dump(dct, fp)
+        json.dump(dct, fp, ensure_ascii=False)
