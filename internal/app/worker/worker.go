@@ -55,7 +55,7 @@ func (w *Worker) handle(ctx context.Context, f model.File) error {
 		"/usr/local/bin/python3",
 		"/app/services/predict-loyal-city/main.py",
 		"-t",
-		"/"+f.Name,
+		"/app/"+f.Name,
 		"-c",
 		"/services/predict-loyal-city/data/cities.csv",
 		"-p",
